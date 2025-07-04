@@ -1,19 +1,39 @@
 package lib;
 
 public class PasswordValidator {
-
+     
     /**
-     * คุณจะต้องเขียน Javadoc ที่สมบูรณ์ที่นี่ในอนาคต
-     * เพื่ออธิบายกฎการทำงานของเมธอด
-     */
+     @param password ใส่รหัสผ่านเป็น ตัวอักษรพิมพ์เล็ก พิมใหญ่ ตัวเลข 8 ตัว
+     @return ระดับความปลอดภัย
+     **/
     // TODO: แก้ไข return type ของเมธอดนี้ให้ถูกต้อง
-    public static void validate(String password) { // Function Type ให้เป็น PasswordStrength 
+    public static PasswordStrength validate(String password) { // Function Type ให้เป็น PasswordStrength 
         
-        // ส่วนของ Implementation ที่คุณต้องเขียน
-        // ...
+        if ( password.length() < 8 ) {
+            return PasswordStrength.INVALID;
+        }
+
+        boolean lower = false ;
+        boolean upper = false ;
+        boolean number = false ;
+
+        for ( char c : password.toCharArray()){
+            if( Character.isLowerCase(c))
+                lower = true ;
+            else if (Character.isUpperCase(c))
+                upper = true ;
+            else if (Character.isDigit(c))
+                number = true;
+        }
         
-        int minLength = 8 // TODO: มีอะไรขาดหายไปที่บรรทัดนี้?
+        if(lower && !upper ) return PasswordStrength.WEAK;
+
+        if(lower && upper) return PasswordStrength.MEDIUM;
         
-        return null ; // TODO: การคืนค่านี้ถูกต้องหรือไม่?
+        if(lower && upper && number ) return PasswordStrength.STRONG;
+        
+        int minLength = 8; // TODO: มีอะไรขาดหายไปที่บรรทัดนี้?
+        
+        return PasswordStrength.INVALID ; // TODO: การคืนค่านี้ถูกต้องหรือไม่?
     }
 }
